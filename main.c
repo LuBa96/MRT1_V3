@@ -52,8 +52,12 @@ int main (void)
 
     LockScreen(); // Bildschirm muss zum Setzen von Pixeln gesperrt sein
   	/*----------------------------------------------------------------------*/
-  	/*--- Fraktale berechnen und ausgeben                                 --*/
-  	/*----------------------------------------------------------------------*/
+
+    /*--- Fraktale berechnen und ausgeben                                 --*/
+
+    	entscheide();
+
+    /*----------------------------------------------------------------------*/
     UnlockScreen(); // Alle Änderungen auf Bildschirm ausgeben
     
     /*Aufrufen von InputChar() um das Programm nach dem öffnen der Graphik   */
