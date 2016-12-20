@@ -13,30 +13,34 @@
 #include <math.h>
 
 	extern int imax;
-	extern struct tParam fType;
-	extern tComplex c1;
-	extern tComplex z1;
-	extern tComplex  complex;
+	extern tParam parameter;
+	tComplex c1 = {0.4, 0.4};
+	tComplex z1 = {0, 0};
+	tComplex complex = {-2, -2};			//Startwert für die Abtastung des 4*4 Feldes
 	tComplex  c;
 	tComplex z;
-	tComplex zLog ={0,0};
 	boolean finished = false;
 	tColor inputColor;
 
 /*--- Interne Funktion: Analyse der Iterationsanzahl -----------------------*/
+
+void berechne();						//Funktionsprototypen bekanntmachen, damit keine impliziten Funktionen erstellt werden, wenn eine aufgerufene funktion erst später deklariert wird
+double absolute(tComplex);
+void GetColorValue(int);
+
+
 void entscheide()
 {
-	if(fType == 0)			//0 = julia
+	if(parameter.fType == 0)			//0 = julia
 	{
 		c =  c1;
-		z = NULL;
+		z.re = 1000;						//unschoen, aber Null-Objekt Zuweisung funktioniert nicht so wie ich das will
 	}
 	else
 	{
-		c = NULL;
+		c.re = 1000;
 		z = z1;
 	}
-	calc();
 }
 
 void calc()
@@ -46,12 +50,11 @@ void calc()
 		berechne();
 		LockScreen();
 		SetPoint(complex.re, complex.im, inputColor);		//complex sollte die pro durchlauf generierte Zahl sein,
-															//d.h. einmal werden die generierten cs und einmal die zs
-															//geplottet, je nach art der menge?
+															//d.h. einmal werden die generierten cs und einmal die zs													//geplottet, je nach art der menge?
 	}
 }
 
-struct tComplex generiere()					//raster viele komlexe zahlen
+tComplex generiere()										//raster viele komlexe zahlen
 {
 
   while (complex.im <= 2)
@@ -72,20 +75,23 @@ struct tComplex generiere()					//raster viele komlexe zahlen
 	  finished = true;						//ändern; Programm beenden
   }
   */
-  printf (complex.re & "+ i" & complex.im);
+
+
+  printf("%f + i*%f", complex.re, complex.im);
+
 
   return complex;
 
 }
 
 
-int berechne()				//z = c + z²
+void berechne()				//z = c + z²
 {
 	while (finished == false)
 	{
 		int i = 0;						//iterationszahl
 		extern double radius;
-		if(c==NULL)
+		if(c.re == 1000)
 		{
 			c = generiere();
 
@@ -95,7 +101,7 @@ int berechne()				//z = c + z²
 			z = generiere();
 		}
 
-		while((abs(z) < radius) && (i < imax))  //solange der Betrag kleiner als der Konvergenzradius ist und imax nicht erreicht ist; Berechnung ausführen
+		while((absolute(z) < radius) && (i < imax))  //solange der Betrag kleiner als der Konvergenzradius ist und imax nicht erreicht ist; Berechnung ausführen
 		{
 			double x = z.re;					// z = c + z²
 			double y = z.im;
@@ -103,11 +109,11 @@ int berechne()				//z = c + z²
 			z.im = c.im + (2 * x * y);
 			i++;
 		}
-		return i;
+		GetColorValue(i);
 	}
 }
 
-double abs(tComplex zAktuell)				//Betragsberechnung
+double absolute(tComplex zAktuell)				//Betragsberechnung
 	{
 		double d = 	sqrt(pow((zAktuell.re),2) + pow((zAktuell.im),2));
 		return d;
@@ -117,41 +123,37 @@ double abs(tComplex zAktuell)				//Betragsberechnung
 void GetColorValue(int i)
 {
 
-	switch (i)
-	{
-	case imax: inputColor = 0;
-	break;
-	case (15*imax/16-1) - (14*imax/16-1): inputColor = 1;
-	break;
-	case (14*imax/16-1) - (13*imax/16-1): inputColor = 2;
-	break;
-	case (13*imax/16-1) - (12*imax/16-1): inputColor = 3;
-	break;
-	case (12*imax/16-1) - (11*imax/16-1): inputColor = 4;
-	break;
-	case (11*imax/16-1) - (10*imax/16-1): inputColor = 5;
-	break;
-	case (10*imax/16-1) - (9*imax/16-1): inputColor = 6;
-	break;
-	case (9*imax/16-1) - (8*imax/16-1): inputColor = 7;
-	break;
-	case (8*imax/16-1) - (7*imax/16-1): inputColor = 8;
-	break;
-	case (7*imax/16-1) - (6*imax/16-1): inputColor = 9;
-	break;
-	case (6*imax/16-1) - (5*imax/16-1): inputColor = 10;
-	break;
-	case (5*imax/16-1) - (4*imax/16-1): inputColor = 11;
-	break;
-	case (4*imax/16-1) - (3*imax/16-1): inputColor = 12;
-	break;
-	case (3*imax/16-1) - (14*imax/16-1): inputColor = 13;
-	break;
-	case (2*imax/16-1) - (13*imax/16-1): inputColor = 14;
-	break;
-	case (1*imax/16-1) - 0: inputColor = 15;
-	break;
-	}
+
+	//case imax: inputColor = 0; case labels müssen leider zur compile zeit constant sein... muss hier festgelegt werden..argh
+
+	if 		(i >= imax)
+			{inputColor = 0;}
+	else if (i >= ((imax/15)*14))
+			{inputColor = 1;}
+	else if (i >= ((imax/15)*13))
+			{inputColor = 2;}
+	else if (i >= ((imax/15)*12))
+			{inputColor = 3;}
+	else if (i >= ((imax/15)*11))
+			{inputColor = 4;}
+	else if (i >= ((imax/15)*10))
+			{inputColor = 5;}
+	else if (i >= ((imax/15)*9))
+			{inputColor = 6;}
+	else if (i >= ((imax/15)*8))
+			{inputColor = 7;}
+	else if (i >= ((imax/15)*7))
+			{inputColor = 8;}
+	else if (i >= ((imax/15)*6))
+			{inputColor = 9;}
+	else if (i >= ((imax/15)*5))
+			{inputColor = 10;}
+	else if (i >= ((imax/15)*4))
+			{inputColor = 11;}
+	else if (i >= ((imax/15)*3))
+			{inputColor = 12;}
+	else if (i >= ((imax/15)*2))
+			{inputColor = 13;}
 }
 	/*alternativ:
 	int idiv = i/(imax/16);

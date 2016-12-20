@@ -13,38 +13,48 @@
 #include "dialog.h"
 #include <stdio.h>
 #include "global.h"
-extern struct tParam fType;
+
+
+int inputInt();
+int inputDouble();
+char inputChar();
+
+void berechne();
+
 int main (void)
 {
-	/*--- Variablendeklaration ---------------------------------------------*/
 
+	/*--- Variablendeklaration ---------------------------------------------*/
+	tParam parameter;
 		//in global.h
 
   	/*--- Initialwerte -----------------------------------------------------*/
-	tComplex c1 = {0.4, 0.4};
-	tComplex z1 = {0, 0};
-	tComplex complex = {-2, -2};			//Startwert für die Abtastung des 4*4 Feldes
-  	/*----------------------------------------------------------------------*/
+
+		//in Fraktal.c
+
+	/*----------------------------------------------------------------------*/
   	/*--- Parameter über Dialog abfragen                                  --*/
+
+
 	void ParamDialog()
 	{
-		tParam parameter;
+
 		parameter.imax = inputInt();
 		parameter.radius = inputDouble();
 		parameter.xmax = inputDouble();
 		parameter.xmin = inputDouble();
-		parameter.xpoints = inputDounble();
+		parameter.xpoints = inputDouble();
 		parameter.ymax = inputDouble();
 		parameter.ymin = inputDouble();
 		parameter.ypoints = inputDouble();
-		fType Typ = inputChar();
+		parameter.fType = inputChar();
 		xRes = (parameter.xmax - parameter.xmin) / parameter.xpoints;			//Auflösung in x-Richtung berechnen
 		yRes = (parameter.ymax - parameter.ymin) / parameter.ypoints;			//Auflösung in y-Richtung berechnen
 	}
   	/*----------------------------------------------------------------------*/
 
 
-    InitGraph (/*xmin, xmax, ymin, ymax übergeben*/); 	// Initialisierung der Grafik
+    InitGraph (parameter.xmin, parameter.xmax, parameter.ymin, parameter.ymax); 	// Initialisierung der Grafik
     
 
     // vllt muss hier das Audrufen der rechne Funktion erfolgen...
@@ -54,8 +64,7 @@ int main (void)
   	/*----------------------------------------------------------------------*/
 
     /*--- Fraktale berechnen und ausgeben                                 --*/
-
-    	entscheide();
+    	berechne();
 
     /*----------------------------------------------------------------------*/
     UnlockScreen(); // Alle Änderungen auf Bildschirm ausgeben

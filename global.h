@@ -14,11 +14,12 @@ typedef struct
 	}tComplex;
 
 
-	typedef struct tParam
+typedef struct
 	{
+		//typedef enum {julia, apfel} fType; //enum funktioniert noch nicht wie gewünscht...
+		char fType;
 		double radius;
 		int imax;
-		typedef enum {j, a} fType;				//input liest nur ersten Buchstaben
 		double xmin, xmax, ymin, ymax;
 		double xpoints, ypoints;
 	}tParam;

@@ -21,29 +21,32 @@ enum bool {FALSE, TRUE};
 
 char InputChar ()
 {
-	char s[80];
-  	fgets(s,sizeof(s), stdin);
-  	return s[0];
+	char s[80];									//stream s der Länge 80
+  	fgets(s,sizeof(s), stdin);					//lies von standard input der Länge von s entsprechend(80) in s ein
+  	return s[0];								//nur erster Buchstabe wird gelesen
 };
 
 /*--- Double-Zahl von der Tastatur lesen -----------------------------------*/
 
-void InputDouble (double *value)
+double InputDouble (double *value)				//habe hier mal die Rückgabe von void auf double geändert, damit ich
+												//die Lesefunktion für die Parametereingabe nutzen kann
 {
   	char *endptr;
   	char s[80];
   	fgets(s,sizeof(s), stdin);
   	if (s[0]!=10) *value=strtod (s, &endptr);
+  	return *value;
 };
 
 
 /*--- Int-Zahl von der Tastatur lesen --------------------------------------*/
 
-void InputInt (int *value)
+int InputInt (int *value)						//void-->int
 {
   char s[80];
   fgets(s,sizeof(s), stdin);
   if (s[0]!=10) *value=atoi (s);
+  return *value;
 };
 
 
