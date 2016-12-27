@@ -10,13 +10,13 @@
 #include "fraktal.h"
 #include "graphic.h"
 #include "global.h"
-#include <math.h>
+#include "math.h"							//habe in properties beim linker die Bibliothek -lm hinzugefügt
+#include <string.h>
 
-	extern int imax;
 	extern tParam parameter;
 	tComplex c1 = {0.4, 0.4};
 	tComplex z1 = {0, 0};
-	tComplex complex = {-2, -2};			//Startwert für die Abtastung des 4*4 Feldes
+	tComplex complex;
 	tComplex  c;
 	tComplex z;
 	boolean finished = false;
@@ -24,14 +24,13 @@
 
 /*--- Interne Funktion: Analyse der Iterationsanzahl -----------------------*/
 
-void berechne();						//Funktionsprototypen bekanntmachen, damit keine impliziten Funktionen erstellt werden, wenn eine aufgerufene funktion erst später deklariert wird
-double absolute(tComplex);
-void GetColorValue(int);
 
+tComplex complex = {-2, -2};
 
 void entscheide()
 {
-	if(parameter.fType == 0)			//0 = julia
+	char* typ = parameter.fType;
+	if(strcmp(typ, "j") == 0)			//0 = julia
 	{
 		c =  c1;
 		z.re = 1000;						//unschoen, aber Null-Objekt Zuweisung funktioniert nicht so wie ich das will
@@ -41,6 +40,7 @@ void entscheide()
 		c.re = 1000;
 		z = z1;
 	}
+	calc();
 }
 
 void calc()
@@ -50,14 +50,15 @@ void calc()
 		berechne();
 		LockScreen();
 		SetPoint(complex.re, complex.im, inputColor);		//complex sollte die pro durchlauf generierte Zahl sein,
-															//d.h. einmal werden die generierten cs und einmal die zs													//geplottet, je nach art der menge?
+		UnlockScreen();													//d.h. einmal werden die generierten cs und einmal die zs													//geplottet, je nach art der menge?
+
 	}
 }
 
 tComplex generiere()										//raster viele komlexe zahlen
 {
 
-  while (complex.im <= 2)
+  if (complex.im <= 2)
   {
 	if (complex.re < 2)
 	{
@@ -68,30 +69,27 @@ tComplex generiere()										//raster viele komlexe zahlen
 		complex.re = -2;
 		complex.im = complex.im + yRes;
 	}
+	//printf("%f + i*%f", complex.re, complex.im);
   }
-/*  else
+  else
   {
 	  printf ("Built fertig");
 	  finished = true;						//ändern; Programm beenden
   }
-  */
-
-
-  printf("%f + i*%f", complex.re, complex.im);
-
 
   return complex;
+
+
+ // printf("%f + i*%f", complex.re, complex.im);
 
 }
 
 
 void berechne()				//z = c + z²
 {
-	while (finished == false)
-	{
+		char* typ = parameter.fType;
 		int i = 0;						//iterationszahl
-		extern double radius;
-		if(c.re == 1000)
+		if(strcmp(typ, "a") == 0)		//Mandelbrotmenge
 		{
 			c = generiere();
 
@@ -101,7 +99,7 @@ void berechne()				//z = c + z²
 			z = generiere();
 		}
 
-		while((absolute(z) < radius) && (i < imax))  //solange der Betrag kleiner als der Konvergenzradius ist und imax nicht erreicht ist; Berechnung ausführen
+		while((absolute(z) < parameter.radius) && (i < parameter.imax))  //solange der Betrag kleiner als der Konvergenzradius ist und imax nicht erreicht ist; Berechnung ausführen
 		{
 			double x = z.re;					// z = c + z²
 			double y = z.im;
@@ -110,7 +108,7 @@ void berechne()				//z = c + z²
 			i++;
 		}
 		GetColorValue(i);
-	}
+
 }
 
 double absolute(tComplex zAktuell)				//Betragsberechnung
@@ -126,37 +124,38 @@ void GetColorValue(int i)
 
 	//case imax: inputColor = 0; case labels müssen leider zur compile zeit constant sein... muss hier festgelegt werden..argh
 
-	if 		(i >= imax)
+
+	if 		(i >= parameter.imax)
 			{inputColor = 0;}
-	else if (i >= ((imax/15)*14))
+	else if (i >= ((parameter.imax/15)*14))
 			{inputColor = 1;}
-	else if (i >= ((imax/15)*13))
+	else if (i >= ((parameter.imax/15)*13))
 			{inputColor = 2;}
-	else if (i >= ((imax/15)*12))
+	else if (i >= ((parameter.imax/15)*12))
 			{inputColor = 3;}
-	else if (i >= ((imax/15)*11))
+	else if (i >= ((parameter.imax/15)*11))
 			{inputColor = 4;}
-	else if (i >= ((imax/15)*10))
+	else if (i >= ((parameter.imax/15)*10))
 			{inputColor = 5;}
-	else if (i >= ((imax/15)*9))
+	else if (i >= ((parameter.imax/15)*9))
 			{inputColor = 6;}
-	else if (i >= ((imax/15)*8))
+	else if (i >= ((parameter.imax/15)*8))
 			{inputColor = 7;}
-	else if (i >= ((imax/15)*7))
+	else if (i >= ((parameter.imax/15)*7))
 			{inputColor = 8;}
-	else if (i >= ((imax/15)*6))
+	else if (i >= ((parameter.imax/15)*6))
 			{inputColor = 9;}
-	else if (i >= ((imax/15)*5))
+	else if (i >= ((parameter.imax/15)*5))
 			{inputColor = 10;}
-	else if (i >= ((imax/15)*4))
+	else if (i >= ((parameter.imax/15)*4))
 			{inputColor = 11;}
-	else if (i >= ((imax/15)*3))
+	else if (i >= ((parameter.imax/15)*3))
 			{inputColor = 12;}
-	else if (i >= ((imax/15)*2))
+	else if (i >= ((parameter.imax/15)*2))
 			{inputColor = 13;}
 }
 	/*alternativ:
-	int idiv = i/(imax/16);
+	int idiv = i/(parameter.imax/16);
 	inputColor = idiv;
 	*/
 /*--- Fraktal-Figur analysieren und zeichnen -------------------------------*/

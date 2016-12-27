@@ -17,7 +17,7 @@ typedef struct
 typedef struct
 	{
 		//typedef enum {julia, apfel} fType; //enum funktioniert noch nicht wie gewünscht...
-		char fType;
+		char fType[80];
 		double radius;
 		int imax;
 		double xmin, xmax, ymin, ymax;

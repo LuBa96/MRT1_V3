@@ -11,10 +11,15 @@
 #ifndef __fraktal
 #define __fraktal
 
+#include "global.h"
 /*--- Datentypvereinbarungen -----------------------------------------------*/
 
 
 /*--- Fraktal analysieren und grafisch darstellen --------------------------*/
+void calc();
+void berechne();						//Funktionsprototypen bekanntmachen, damit keine impliziten Funktionen erstellt werden, wenn eine aufgerufene funktion erst später deklariert wird
+double absolute(tComplex zAktuell);
+void GetColorValue(int);
 
 #endif
 
