@@ -42,14 +42,14 @@ int main (void)
 	//void ParamDialog()
 	//{
 
-		parameter.imax = 75;
+		parameter.imax = 30;
 		parameter.radius = 2;
 		parameter.xmax = 2;
 		parameter.xmin = -2;
-		parameter.xpoints = 640;//640;
+		parameter.xpoints = 256;//640;
 		parameter.ymax = 2;
 		parameter.ymin = -2;
-		parameter.ypoints = 480;// 480;
+		parameter.ypoints = 192;// 480;
 		strcpy(parameter.fType, "j");
 
 

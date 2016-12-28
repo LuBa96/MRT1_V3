@@ -20,6 +20,7 @@
 	tComplex  c;
 	tComplex z;
 	boolean finished = false;
+	boolean julia;
 	tColor inputColor;
 
 /*--- Interne Funktion: Analyse der Iterationsanzahl -----------------------*/
@@ -30,7 +31,15 @@ tComplex complex = {-2, -2};
 void entscheide()
 {
 	char* typ = parameter.fType;
-	if(strcmp(typ, "j") == 0)			//0 = julia
+	if(strcmp(typ, "j") == 0)
+	{
+		julia = true;
+	}
+	else if (strcmp(typ, "a") == 0)
+	{
+		julia = false;
+	}
+	if(julia == true)
 	{
 		c =  c1;
 		z.re = 1000;						//unschoen, aber Null-Objekt Zuweisung funktioniert nicht so wie ich das will
@@ -85,23 +94,22 @@ tComplex generiere()										//raster viele komlexe zahlen
 }
 
 
-void berechne()				//z = c + z²
+void berechne()																//z = c + z²
 {
-		char* typ = parameter.fType;
-		int i = 0;						//iterationszahl
-		if(strcmp(typ, "a") == 0)		//Mandelbrotmenge
+		int i = 0;															//iterationszahl
+		if(julia == false)													//Mandelbrotmenge
 		{
-			c = generiere();
-
-		}
-		else
+			c = generiere();												//für die Mandelbrotmenge muss z0 fest sein und c ist veränderlich
+			z = z1;															//bei der Juliamenge ist es genau umgekehrt
+		}																	//generiere() erzeugt komplexe Zahlen von -2-2i bis 2+2i
+		else																//Die Auflösung erfolgt entsprechend xRes und yRes --> main()
+		{																	//Wichtig: Die Zuweisung z = z1 muss hier erneut erfolgen, da bei der Mandelbrotmenge
+			z = generiere();												//z bei jeder neuen Berechnung wieder der Startwert z1 sei soll, andernfalls wird mit
+		}																	//dem letzten z der vorherigen Berechnung weitergerechnet-->also "unendlich oft mit den
+																			//gleichen Parametern iteriert
+		while((absolute(z) < parameter.radius) && (i < parameter.imax))  	//solange der Betrag kleiner als der Konvergenzradius ist und imax nicht erreicht ist; Berechnung ausführen
 		{
-			z = generiere();
-		}
-
-		while((absolute(z) < parameter.radius) && (i < parameter.imax))  //solange der Betrag kleiner als der Konvergenzradius ist und imax nicht erreicht ist; Berechnung ausführen
-		{
-			double x = z.re;					// z = c + z²
+			double x = z.re;												// z = c + z²
 			double y = z.im;
 			z.re = c.re + (pow(x,2) - pow(y,2));
 			z.im = c.im + (2 * x * y);
