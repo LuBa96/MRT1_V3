@@ -14,7 +14,8 @@
 #include "fraktal.h"
 
 /*--- Parameter Dialog Prototyp --------------------------------------------*/
-
+int InputInt();
+double InputDouble();
 /*--- Funktion zum einlesen des ersten Characters einer getchar() Eingabe --*/
 char InputChar();
 

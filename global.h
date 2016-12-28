@@ -16,8 +16,8 @@ typedef struct
 
 typedef struct
 	{
-		//typedef enum {julia, apfel} fType; //enum funktioniert noch nicht wie gewünscht...
-		char fType[80];
+		enum fType {j, a}FraktalTyp; 					//enum funktioniert noch nicht wie gewünscht...
+		//char fType;									//enumerationstyp zuerst erstellen, dann mit InputChar definieren
 		double radius;
 		int imax;
 		double xmin, xmax, ymin, ymax;
@@ -26,5 +26,4 @@ typedef struct
 
 double xRes, yRes;
 typedef enum {false, true}boolean;
-
 #endif /* GLOBAL_H_ */

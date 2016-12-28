@@ -16,10 +16,6 @@
 #include "global.h"
 
 
-/*int inputInt();
-int inputDouble();
-char inputChar();
-*/
 void entscheide();
 
 tParam parameter;
@@ -39,9 +35,9 @@ int main (void)
   	/*--- Parameter über Dialog abfragen                                  --*/
 
 
-	//void ParamDialog()
-	//{
-
+	void ParamDialog()
+	{
+/*
 		parameter.imax = 30;
 		parameter.radius = 2;
 		parameter.xmax = 2;
@@ -50,24 +46,24 @@ int main (void)
 		parameter.ymax = 2;
 		parameter.ymin = -2;
 		parameter.ypoints = 192;// 480;
-		strcpy(parameter.fType, "j");
+		strcpy(parameter.fType, "a");
+*/
 
+		parameter.imax = InputInt();
+		parameter.radius = InputDouble();
+		parameter.xmax = InputDouble();
+		parameter.xmin = InputDouble();
+		parameter.xpoints = InputDouble();
+		parameter.ymax = InputDouble();
+		parameter.ymin = InputDouble();
+		parameter.ypoints = InputDouble();
+		parameter.FraktalTyp = InputChar();
+		xRes = (parameter.xmax - parameter.xmin) / parameter.xpoints;				//Auflösung in x-Richtung berechnen
+		yRes = (parameter.ymax - parameter.ymin) / parameter.ypoints;				//Auflösung in y-Richtung berechnen
 
-	/*	parameter.imax = inputInt();
-		parameter.radius = inputDouble();
-		parameter.xmax = inputDouble();
-		parameter.xmin = inputDouble();
-		parameter.xpoints = inputDouble();
-		parameter.ymax = inputDouble();
-		parameter.ymin = inputDouble();
-		parameter.ypoints = inputDouble();
-		parameter.fType = inputChar();
-		xRes = (parameter.xmax - parameter.xmin) / parameter.xpoints;			//Auflösung in x-Richtung berechnen
-		yRes = (parameter.ymax - parameter.ymin) / parameter.ypoints;			//Auflösung in y-Richtung berechnen
-	*/
-	//}
-	xRes = (parameter.xmax - parameter.xmin) / parameter.xpoints;			//Auflösung in x-Richtung berechnen
-	yRes = (parameter.ymax - parameter.ymin) / parameter.ypoints;
+	}
+	//xRes = (parameter.xmax - parameter.xmin) / parameter.xpoints;					//Auflösung in x-Richtung berechnen
+	//yRes = (parameter.ymax - parameter.ymin) / parameter.ypoints;
   	/*----------------------------------------------------------------------*/
 
 

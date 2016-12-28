@@ -30,7 +30,7 @@ tComplex complex = {-2, -2};
 
 void entscheide()
 {
-	char* typ = parameter.fType;
+	/*char typ = fType;
 	if(strcmp(typ, "j") == 0)
 	{
 		julia = true;
@@ -39,7 +39,8 @@ void entscheide()
 	{
 		julia = false;
 	}
-	if(julia == true)
+	*/
+	if(parameter.FraktalTyp == j)
 	{
 		c =  c1;
 		z.re = 1000;						//unschoen, aber Null-Objekt Zuweisung funktioniert nicht so wie ich das will
