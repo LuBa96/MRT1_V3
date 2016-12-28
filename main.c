@@ -16,7 +16,7 @@
 #include "global.h"
 
 
-void entscheide();
+
 
 tParam parameter;
 
@@ -35,8 +35,8 @@ int main (void)
   	/*--- Parameter über Dialog abfragen                                  --*/
 
 
-	void ParamDialog()
-	{
+	//void ParamDialog()
+	//{
 /*
 		parameter.imax = 30;
 		parameter.radius = 2;
@@ -46,26 +46,50 @@ int main (void)
 		parameter.ymax = 2;
 		parameter.ymin = -2;
 		parameter.ypoints = 192;// 480;
-		strcpy(parameter.fType, "a");
+		parameter.FraktalTyp = a;
 */
+		printf("Geben Sie die maximale Anzahl der Iterationen ein!\n");
+		scanf("%d", &parameter.imax);
+		printf("Geben Sie den gewuenschten Konvergenzradius ein!\n");
+		scanf("%le", &parameter.radius);
+		printf("Obere Grenze des x-Wertebereiches: ");
+		scanf("%le", &parameter.xmax);
+		printf("Untere Grenze des x-Wertebereiches: ");
+		scanf("%le",&parameter.xmin);
+		printf("Aufloesung (x): ");
+		scanf("%le",&parameter.xpoints);
+		printf("Obere Grenze des y-Wertebereiches: ");
+		scanf("%le",&parameter.ymax);
+		printf("Untere Grenze des y-Wertebereiches: ");
+		scanf("%le",&parameter.ymin);
+		printf("Aufloesung (y): ");
+		scanf("%le",&parameter.ypoints);
 
-		parameter.imax = InputInt();
-		parameter.radius = InputDouble();
-		parameter.xmax = InputDouble();
-		parameter.xmin = InputDouble();
-		parameter.xpoints = InputDouble();
-		parameter.ymax = InputDouble();
-		parameter.ymin = InputDouble();
-		parameter.ypoints = InputDouble();
-		parameter.FraktalTyp = InputChar();
+		parameter.FraktalTyp = a;
+		/*char Typ;
+
+		printf("Mandelbrot- oder Juliamenge?\n a/j\n");
+		scanf("%c",&parameter.FraktalTyp);
+		if (strcmp(&Typ, "a")==0)
+		{
+			parameter.FraktalTyp = a;
+		}
+		else if (strcmp(&Typ, "j")==0)
+		{
+			parameter.FraktalTyp = j;
+		}
+		else
+		{
+			printf("Nur a für Mandelbrotmenge und j für Juliamenge erlaubte Eingabewerte!");
+		}
+		*/
 		xRes = (parameter.xmax - parameter.xmin) / parameter.xpoints;				//Auflösung in x-Richtung berechnen
 		yRes = (parameter.ymax - parameter.ymin) / parameter.ypoints;				//Auflösung in y-Richtung berechnen
 
-	}
-	//xRes = (parameter.xmax - parameter.xmin) / parameter.xpoints;					//Auflösung in x-Richtung berechnen
-	//yRes = (parameter.ymax - parameter.ymin) / parameter.ypoints;
-  	/*----------------------------------------------------------------------*/
+	//}
 
+  	/*----------------------------------------------------------------------*/
+	void entscheide();																//berechne bekanntmachen
 
     InitGraph (parameter.xmin, parameter.xmax, parameter.ymin, parameter.ymax); 	// Initialisierung der Grafik
     

@@ -98,7 +98,7 @@ tComplex generiere()										//raster viele komlexe zahlen
 void berechne()																//z = c + z²
 {
 		int i = 0;															//iterationszahl
-		if(julia == false)													//Mandelbrotmenge
+		if(parameter.FraktalTyp == a)										//Mandelbrotmenge
 		{
 			c = generiere();												//für die Mandelbrotmenge muss z0 fest sein und c ist veränderlich
 			z = z1;															//bei der Juliamenge ist es genau umgekehrt
