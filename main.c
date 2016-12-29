@@ -33,10 +33,6 @@ int main (void)
 
 	/*----------------------------------------------------------------------*/
   	/*--- Parameter über Dialog abfragen                                  --*/
-
-
-	//void ParamDialog()
-	//{
 /*
 		parameter.imax = 30;
 		parameter.radius = 2;
@@ -65,28 +61,19 @@ int main (void)
 		printf("Aufloesung (y): ");
 		scanf("%le",&parameter.ypoints);
 
-		parameter.FraktalTyp = a;
-		/*char Typ;
+		//parameter.FraktalTyp = a;
+		printf("Julia- oder Mandelbrotmenge?\n 0/1\n");
+		scanf("%u",&parameter.FraktalTyp);
+		while (parameter.FraktalTyp != 0 && parameter.FraktalTyp != 1)
+		{
+			printf("Nur 1 für Mandelbrotmenge und 0 für Juliamenge erlaubte Eingabewerte!");
+			scanf("%u",&parameter.FraktalTyp);
+		}
 
-		printf("Mandelbrot- oder Juliamenge?\n a/j\n");
-		scanf("%c",&parameter.FraktalTyp);
-		if (strcmp(&Typ, "a")==0)
-		{
-			parameter.FraktalTyp = a;
-		}
-		else if (strcmp(&Typ, "j")==0)
-		{
-			parameter.FraktalTyp = j;
-		}
-		else
-		{
-			printf("Nur a für Mandelbrotmenge und j für Juliamenge erlaubte Eingabewerte!");
-		}
-		*/
 		xRes = (parameter.xmax - parameter.xmin) / parameter.xpoints;				//Auflösung in x-Richtung berechnen
 		yRes = (parameter.ymax - parameter.ymin) / parameter.ypoints;				//Auflösung in y-Richtung berechnen
 
-	//}
+
 
   	/*----------------------------------------------------------------------*/
 	void entscheide();																//berechne bekanntmachen
@@ -101,7 +88,7 @@ int main (void)
   	/*----------------------------------------------------------------------*/
 
     /*--- Fraktale berechnen und ausgeben                                 --*/
-    	entscheide();
+    entscheide();
 
     /*----------------------------------------------------------------------*/
     UnlockScreen(); // Alle Änderungen auf Bildschirm ausgeben

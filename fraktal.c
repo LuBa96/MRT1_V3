@@ -63,20 +63,21 @@ void calc()
 		UnlockScreen();													//d.h. einmal werden die generierten cs und einmal die zs													//geplottet, je nach art der menge?
 
 	}
+	printf("calc finished");
 }
 
 tComplex generiere()										//raster viele komlexe zahlen
 {
 
-  if (complex.im <= 2)
+  if (complex.im <= parameter.ymax)
   {
-	if (complex.re < 2)
+	if (complex.re < parameter.xmax)
 	{
 		complex.re = complex.re + xRes;
 	}
 	else
 	{
-		complex.re = -2;
+		complex.re = parameter.xmin;
 		complex.im = complex.im + yRes;
 	}
 	//printf("%f + i*%f", complex.re, complex.im);
@@ -162,6 +163,10 @@ void GetColorValue(int i)
 			{inputColor = 12;}
 	else if (i >= ((parameter.imax/15)*2))
 			{inputColor = 13;}
+	else if (i >= ((parameter.imax/15)))
+			{inputColor = 14;}
+	else if (i >= 0)
+			{inputColor = 15;}
 }
 	/*alternativ:
 	int idiv = i/(parameter.imax/16);
