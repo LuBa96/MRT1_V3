@@ -91,11 +91,13 @@ int main (void)
     entscheide();
 
     /*----------------------------------------------------------------------*/
-    UnlockScreen(); // Alle Änderungen auf Bildschirm ausgeben
+    //UnlockScreen(); // Alle Änderungen auf Bildschirm ausgeben
     
     /*Aufrufen von InputChar() um das Programm nach dem öffnen der Graphik   */
     /*anzuhalten. Erst wenn in der Konsole eine Taste gedrückt wird, schließt*/
     /*sich das Fenster wieder. */
+    int Ende;
+    scanf("%d", &Ende);													//InputChar() funktioniert noch nicht richtig..
     InputChar();
     CloseGraph();
 	

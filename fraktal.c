@@ -19,10 +19,8 @@
 	tComplex complex;
 	tComplex  c;
 	tComplex z;
-	boolean finished = false;
-	boolean julia;
 	tColor inputColor;
-
+	int IntPoints;
 /*--- Interne Funktion: Analyse der Iterationsanzahl -----------------------*/
 
 
@@ -55,12 +53,14 @@ void entscheide()
 
 void calc()
 {
-	while (finished == false)
+	IntPoints = 0;
+	while (IntPoints < (parameter.xpoints*parameter.ypoints))
 	{
+		IntPoints++;
 		berechne();
 		LockScreen();
 		SetPoint(complex.re, complex.im, inputColor);		//complex sollte die pro durchlauf generierte Zahl sein,
-		UnlockScreen();													//d.h. einmal werden die generierten cs und einmal die zs													//geplottet, je nach art der menge?
+		UnlockScreen();										//d.h. einmal werden die generierten cs und einmal die zs													//geplottet, je nach art der menge?
 
 	}
 	printf("calc finished");
@@ -69,7 +69,7 @@ void calc()
 tComplex generiere()										//raster viele komlexe zahlen
 {
 
-  if (complex.im <= parameter.ymax)
+  if (((complex.im != parameter.ymax) || (complex.re != parameter.xmax)) || !((complex.im > parameter.ymax) && (complex.re > parameter.xmax)) )
   {
 	if (complex.re < parameter.xmax)
 	{
@@ -85,7 +85,8 @@ tComplex generiere()										//raster viele komlexe zahlen
   else
   {
 	  printf ("Built fertig");
-	  finished = true;						//ändern; Programm beenden
+	  complex.re = parameter.xmax;			// letzten Wert übergeben
+	  complex.im = parameter.ymax;			//ändern; Programm beenden
   }
 
   return complex;
