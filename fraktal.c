@@ -23,6 +23,7 @@
 	int IntPoints;
 /*--- Interne Funktion: Analyse der Iterationsanzahl -----------------------*/
 
+	tComplex ue;
 
 tComplex complex = {-2, -2};
 
@@ -103,11 +104,13 @@ void berechne()																//z = c + z²
 		if(parameter.FraktalTyp == a)										//Mandelbrotmenge
 		{
 			c = generiere();												//für die Mandelbrotmenge muss z0 fest sein und c ist veränderlich
-			z = z1;															//bei der Juliamenge ist es genau umgekehrt
+			z = z1;
+			ue = z;																//bei der Juliamenge ist es genau umgekehrt
 		}																	//generiere() erzeugt komplexe Zahlen von -2-2i bis 2+2i
 		else																//Die Auflösung erfolgt entsprechend xRes und yRes --> main()
 		{																	//Wichtig: Die Zuweisung z = z1 muss hier erneut erfolgen, da bei der Mandelbrotmenge
-			z = generiere();												//z bei jeder neuen Berechnung wieder der Startwert z1 sei soll, andernfalls wird mit
+			z = generiere();
+			ue=z;//z bei jeder neuen Berechnung wieder der Startwert z1 sei soll, andernfalls wird mit
 		}																	//dem letzten z der vorherigen Berechnung weitergerechnet-->also "unendlich oft mit den
 																			//gleichen Parametern iteriert
 		while((absolute(z) < parameter.radius) && (i < parameter.imax))  	//solange der Betrag kleiner als der Konvergenzradius ist und imax nicht erreicht ist; Berechnung ausführen
@@ -122,9 +125,11 @@ void berechne()																//z = c + z²
 
 }
 
-double absolute(tComplex zAktuell)				//Betragsberechnung
+double absolute(tComplex zAktuell)											//Betragsberechnung
 	{
-		double d = 	sqrt(pow((zAktuell.re),2) + pow((zAktuell.im),2));
+		double uex = sqrt(pow(ue.re,2));									//Diskussionsbedarf!?
+		double uey = sqrt(pow(ue.im,2));
+		double d = 	sqrt(pow((zAktuell.re - uex),2) + pow((zAktuell.im - uey),2));
 		return d;
 	}
 /*--- Interne Funktion: Farbwert bestimmen ---------------------------------*/

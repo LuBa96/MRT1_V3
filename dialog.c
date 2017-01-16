@@ -22,7 +22,7 @@ enum bool {FALSE, TRUE};
 char InputChar ()
 {
 	char s[80];									//stream s der Länge 80
-  	fgets(s,sizeof(s), stdin);					//lies von standard input der Länge von s entsprechend(80) in s ein
+	fgets(s,sizeof(s), stdin);					//lies von standard input der Länge von s entsprechend(80) in s ein
   	return s[0];								//nur erster Buchstabe wird gelesen
 };
 

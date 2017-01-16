@@ -44,7 +44,10 @@ int main (void)
 		parameter.ypoints = 192;// 480;
 		parameter.FraktalTyp = a;
 */
-		printf("Geben Sie die maximale Anzahl der Iterationen ein!\n");
+		printf("Geben Sie die maximale Anzahl der Iterationen ein!\n");		// lies & als "Address of"; scanf stellt nur einen Pointer auf
+																			//einen Speicherplatz des jeweiligen Typen bereit (%d --> int*)
+																			//mit der Vorsilbe "&" wird der Speicherplatz dann gefüllt;
+																			//alternativ: *(content)
 		scanf("%d", &parameter.imax);
 		printf("Geben Sie den gewuenschten Konvergenzradius ein!\n");
 		scanf("%le", &parameter.radius);
@@ -86,12 +89,12 @@ int main (void)
 
     LockScreen(); // Bildschirm muss zum Setzen von Pixeln gesperrt sein
   	/*----------------------------------------------------------------------*/
-
+    InputChar();
     /*--- Fraktale berechnen und ausgeben                                 --*/
     entscheide();
 
     /*----------------------------------------------------------------------*/
-    //UnlockScreen(); // Alle Änderungen auf Bildschirm ausgeben
+    UnlockScreen(); // Alle Änderungen auf Bildschirm ausgeben
     
     /*Aufrufen von InputChar() um das Programm nach dem öffnen der Graphik   */
     /*anzuhalten. Erst wenn in der Konsole eine Taste gedrückt wird, schließt*/
