@@ -13,6 +13,7 @@
 #include "math.h"							//habe in properties beim linker die Bibliothek -lm hinzugefügt
 #include <string.h>
 
+
 	extern tParam parameter;
 	tComplex c1 = {0.4, 0.4};
 	tComplex z1 = {0, 0};
@@ -21,34 +22,45 @@
 	tComplex z;
 	tColor inputColor;
 	int IntPoints;
+	boolean alteFormel;
 /*--- Interne Funktion: Analyse der Iterationsanzahl -----------------------*/
 
 	tComplex ue;
 
-tComplex complex = {-2, -2};
+	tComplex complex = {-2, -2};
 
 void entscheide()
 {
-	/*char typ = fType;
-	if(strcmp(typ, "j") == 0)
+	switch (parameter.FraktalTyp)
 	{
-		julia = true;
+	case j:		c =  c1;
+				z.re = 1000;
+				alteFormel = true;
+				break;
+	case a:		c.re = 1000;
+				z = z1;
+				alteFormel = true;
+				break;
+	case n:		c.re = 1000;
+				z = z1;
+				alteFormel = false;
+				break;
 	}
-	else if (strcmp(typ, "a") == 0)
+
+/*
+	if(parameter.FraktalTyp == j || parameter.FraktalTyp == a)
 	{
-		julia = false;
-	}
-	*/
-	if(parameter.FraktalTyp == j)
+		if(parameter.FraktalTyp == j)
 	{
 		c =  c1;
-		z.re = 1000;						//unschoen, aber Null-Objekt Zuweisung funktioniert nicht so wie ich das will
+		z.re = 1000;						//Notlösung, da es in C kein Null Objekt gibt
 	}
 	else
 	{
 		c.re = 1000;
 		z = z1;
 	}
+*/
 	calc();
 }
 
@@ -100,7 +112,10 @@ tComplex generiere()										//raster viele komlexe zahlen
 
 void berechne()																//z = c + z²
 {
-		int i = 0;															//iterationszahl
+	int i = 0;
+	if (alteFormel==true)
+	{
+																	//iterationszahl
 		if(parameter.FraktalTyp == a)										//Mandelbrotmenge
 		{
 			c = generiere();												//für die Mandelbrotmenge muss z0 fest sein und c ist veränderlich
@@ -122,7 +137,27 @@ void berechne()																//z = c + z²
 			i++;
 		}
 		GetColorValue(i);
+	}
+	else
+	{
+		c = generiere();
+		z=z1;
+		double x1 = 0;
+		double y1 = 0;
+		while((absolute(z) < parameter.radius) && (i < parameter.imax))  	//solange der Betrag kleiner als der Konvergenzradius ist und imax nicht erreicht ist; Berechnung ausführen
+				{
+					double x = z.re;												// z+2 = c + z + z+1²
+					double y = z.im;
 
+					z.re = c.re + x + (pow(x1,2) - pow(y1,2));
+					z.im = c.im + y + (2 * x1 * y1);
+
+					x1 = z.re;
+					y1 = z.im;
+					i++;
+				}
+		GetColorValue(i);
+	}
 }
 
 double absolute(tComplex zAktuell)											//Betragsberechnung

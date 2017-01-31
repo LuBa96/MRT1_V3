@@ -8,22 +8,23 @@
 #ifndef GLOBAL_H_
 #define GLOBAL_H_
 
+/*Definition der komplexen Zahl*/
 typedef struct
 	{
 		double re, im;
 	}tComplex;
 
 
+/*Definition der Paremeterstruktur*/
 typedef struct
 	{
-		enum fType {j, a}FraktalTyp; 					//enum funktioniert noch nicht wie gewünscht...
-		//char fType;									//enumerationstyp zuerst erstellen, dann mit InputChar definieren
+		enum fType {j, a, n}FraktalTyp;
 		double radius;
 		int imax;
 		double xmin, xmax, ymin, ymax;
 		double xpoints, ypoints;
 	}tParam;
 
-double xRes, yRes;
+double xRes, yRes;							//Schrittweite für generiere()
 typedef enum {false, true}boolean;
 #endif /* GLOBAL_H_ */

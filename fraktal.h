@@ -17,7 +17,8 @@
 
 /*--- Fraktal analysieren und grafisch darstellen --------------------------*/
 void calc();
-void berechne();						//Funktionsprototypen bekanntmachen, damit keine impliziten Funktionen erstellt werden, wenn eine aufgerufene funktion erst später deklariert wird
+void berechne();						//Funktionsprototypen bekanntmachen, damit keine impliziten Funktionen erstellt werden,
+										//wenn eine aufgerufene Funktion erst später deklariert wird
 double absolute(tComplex zAktuell);
 void GetColorValue(int);
 
